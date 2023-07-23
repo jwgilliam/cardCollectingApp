@@ -1,21 +1,45 @@
 // import get method from provider 
-import { getCards } from "./cardProvider.js"
+import { useSearchedCards, saveCard } from "./cardProvider.js"
 
 // write wrapper function? 
-export const cardSearchComponent = () => {
+const cardSearchComponent = () => {
   //contentTarget and eventHub
-  const contentTarget = document.querySelector(".card-search-container")
+  const contentTarget = document.querySelector("#card-search-container")
   const eventHub = document.querySelector(".container")
 
   //click events for search button using get method
   eventHub.addEventListener("click", clickEvent => {
     // using get cards, sending request to api, setting array to equal search results 
     if (clickEvent.target.id === "search_button") {
-      const message = new CustomEvent("searchButtonClicked")
+      // console.log("other button check")
       const query = document.querySelector("#search_input").value
-      getCards(query)
-        .then(eventHub.dispatchEvent(message))
+      const message = new CustomEvent("searchButtonClicked", {
+        detail: {
+          cardSearch: query
+        }
+      })
 
+      eventHub.dispatchEvent(message)
+
+      // getCards(query)
+      //   .then(console.log(useSearchedCards()))
+      //   .then(eventHub.dispatchEvent(message))
+
+
+
+    }
+
+    if (clickEvent.target.id === "show_collection_button") {
+      const message = new CustomEvent("showCollectionButtonClicked")
+      eventHub.dispatchEvent(message)
+    }
+
+    if (clickEvent.target.id.startsWith("save_card--")) {
+      const [prefix, id] = clickEvent.target.id.split("--");
+      const newCard = {
+        id: id
+      }
+      saveCard(newCard);
     }
   })
 
@@ -28,6 +52,7 @@ export const cardSearchComponent = () => {
     <div class="search_bar_div">
     <input type="text" isRequired id="search_input"/>
     <button id="search_button">Search</button>
+    <button id="show_collection_button">My cards</button>
     </div>
     `
   }

@@ -2,6 +2,7 @@
 
 let cards = []
 let myCollection = []
+let cardCollectionIds = []
 
 
 export const useMyCollection = () => {
@@ -20,18 +21,64 @@ export const setCollection = (storedCards) => {
   myCollection = storedCards.slice()
 }
 
-export const getCards = () => {
-  return fetch("")
+const setCardCollectionIds = (cardArray) => {
+  cardCollectionIds = cardArray
+}
+
+export const useCardCollectionIds = () => {
+  return cardCollectionIds
+}
+
+export const getCards = (cardSearch) => {
+  return fetch(`https://api.pokemontcg.io/v2/cards?q=name:"${cardSearch}"`)
+    .then(response => response.json())
+    .then(parsedCards => {
+      setCards(parsedCards.data)
+
+
+    })
+
 }
 
 export const saveCard = (cardId) => {
-  return fetch(`http://localhost:8088/cards/${cardId}`)
+  return fetch(`http://localhost:8088/cards/${cardId}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(cardId)
+  })
 }
 
 export const deleteCard = (cardId) => {
-
+  return fetch(`http://localhost:8088/cards/${cardId}`, {
+    method: "DELETE"
+  }).then(getCards)
 }
 
-export const getMyCards = (cardArray) => {
-
+export const getMyCards = () => {
+  return fetch(`http://localhost:8088/cards`)
+    .then((response) => response.json())
+    .then(parsedCards => {
+      setCollection(parsedCards)
+    })
 }
+
+// export const getCardById = (cardIds) => {
+//   let foundCardIds = []
+//   cardIds.map((element) => {
+//     fetch(`https://api.pokemontcg.io/v2/cards?q=id:"${element.id}"`)
+//       .then(response => response.json())
+//       .then(parsedCards => {
+//         foundCardIds.push(parsedCards)
+//       })
+
+//   },
+//     setCollection(foundCardIds)
+
+
+//   )
+
+
+
+// }
