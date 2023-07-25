@@ -60,25 +60,27 @@ export const getMyCards = () => {
   return fetch(`http://localhost:8088/cards`)
     .then((response) => response.json())
     .then(parsedCards => {
-      setCollection(parsedCards)
+      setCardCollectionIds(parsedCards)
+      console.log(cardCollectionIds)
     })
 }
 
-// export const getCardById = (cardIds) => {
-//   let foundCardIds = []
-//   cardIds.map((element) => {
-//     fetch(`https://api.pokemontcg.io/v2/cards?q=id:"${element.id}"`)
-//       .then(response => response.json())
-//       .then(parsedCards => {
-//         foundCardIds.push(parsedCards)
-//       })
+export const getCardById = (cardIds) => {
+  let foundCardIds = []
+  cardIds.map((element) => {
+    fetch(`https://api.pokemontcg.io/v2/cards?q=id:"${element.id}"`)
+      .then(response => response.json())
+      .then(parsedCards => {
+        foundCardIds.push(parsedCards)
+      })
 
-//   },
-//     setCollection(foundCardIds)
-
-
-//   )
+  },
+    setCollection(foundCardIds),
+    console.log(foundCardIds)
 
 
+  )
 
-// }
+
+
+}
