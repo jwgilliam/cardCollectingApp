@@ -40,13 +40,13 @@ export const getCards = (cardSearch) => {
 
 }
 
-export const saveCard = (cardId) => {
-  return fetch(`http://localhost:8088/cards/${cardId}`, {
+export const saveCard = (card) => {
+  return fetch("http://localhost:8088/cards", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify(cardId)
+    body: JSON.stringify(card)
   })
 }
 

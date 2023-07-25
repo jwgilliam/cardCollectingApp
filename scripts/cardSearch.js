@@ -39,6 +39,7 @@ const cardSearchComponent = () => {
       const newCard = {
         id: id
       }
+      console.log(newCard)
       saveCard(newCard);
     }
   })
