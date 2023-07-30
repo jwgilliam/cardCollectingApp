@@ -1,4 +1,4 @@
-import { useMyCollection, useCardCollectionIds } from "./cardProvider.js";
+import { useMyCollection, useCardCollectionIds, getMyCards } from "./cardProvider.js";
 import { getCardById } from "./cardProvider.js"
 import cardComponent from "./card.js";
 
@@ -6,16 +6,19 @@ const cardListComponent = () => {
   const eventHub = document.querySelector(".container")
   const contentTarget = document.querySelector("#card-list-container")
 
-  const collection = useMyCollection
-  const collectionById = useCardCollectionIds
+  // getMyCards()
+  const collectionById = useCardCollectionIds()
+  console.log(collectionById)
   getCardById(collectionById)
+  const collection = useMyCollection()
+  console.log(collection)
 
 
   eventHub.addEventListener("click", (clickEvent) => {
     if (clickEvent.target.id === "show_collection_button") {
       console.log("button check")
       clickEvent.preventDefault()
-      console.log(collection())
+      console.log(collection)
       render(collection)
 
     }

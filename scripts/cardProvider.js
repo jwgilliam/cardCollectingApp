@@ -18,7 +18,9 @@ export const setCards = (searchedCards) => {
 }
 
 export const setCollection = (storedCards) => {
-  myCollection = storedCards.slice()
+  // myCollection = storedCards.slice()
+  myCollection = storedCards
+  console.log(myCollection)
 }
 
 const setCardCollectionIds = (cardArray) => {
@@ -71,16 +73,16 @@ export const getCardById = (cardIds) => {
     fetch(`https://api.pokemontcg.io/v2/cards?q=id:"${element.id}"`)
       .then(response => response.json())
       .then(parsedCards => {
-        foundCardIds.push(parsedCards)
+        foundCardIds.push(parsedCards.data[0])
       })
 
   },
-    setCollection(foundCardIds),
-    console.log(foundCardIds)
+
 
 
   )
 
-
+  setCollection(foundCardIds),
+    console.log(foundCardIds)
 
 }

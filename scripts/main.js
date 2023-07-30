@@ -6,4 +6,5 @@ import { getMyCards } from "./cardProvider.js";
 
 cardSearchComponent()
 getMyCards().then(cardListComponent)
+// cardListComponent()
 cardSearchList()
